@@ -22,17 +22,18 @@ docs/
   SKILL_FORMAT.md
 templates/
   skill/
-    SKILL.md
+    SKILL.md.template
 scripts/
   validate-skills.sh
 ```
 
 ## Add a Skill
 
-1. Copy `templates/skill` to `skills/<skill-name>`.
-2. Fill in `SKILL.md`.
-3. Add any supporting examples, scripts or templates inside that skill folder.
-4. Run:
+1. Create `skills/<skill-name>/`.
+2. Copy `templates/skill/SKILL.md.template` to `skills/<skill-name>/SKILL.md`.
+3. Fill in `SKILL.md`.
+4. Add any supporting examples, scripts, references or assets inside that skill folder.
+5. Run:
 
 ```bash
 ./scripts/validate-skills.sh
