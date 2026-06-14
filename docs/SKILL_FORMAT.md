@@ -16,7 +16,8 @@ skills/<skill-name>/
   SKILL.md
   scripts/
   examples/
-  templates/
+  references/
+  assets/
 ```
 
 ## `SKILL.md`
