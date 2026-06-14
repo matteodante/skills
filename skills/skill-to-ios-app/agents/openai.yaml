@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill to iOS App"
+  short_description: "Turn agent skills into native iOS apps"
+  default_prompt: "Use $skill-to-ios-app to turn this skill into a native iOS app."

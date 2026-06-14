@@ -39,6 +39,10 @@ scripts/
 ./scripts/validate-skills.sh
 ```
 
+## Skills
+
+- `skill-to-ios-app`: turns an agent skill or workflow into a native Apple-first iOS app plan/project.
+
 ## License
 
 MIT. Only commit content you own or are allowed to publish.
