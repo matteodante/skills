@@ -5,7 +5,7 @@ description: Transform an existing agent skill, SKILL.md, workflow, or inferred 
 
 # Skill To iOS App
 
-Convert a skill or agent workflow into a native iPhone app. Start by understanding the product, then generate a real Apple-native project instead of a wrapper around the skill text.
+Convert a skill or agent workflow into a native iPhone app. Start by understanding the product, then generate a real Apple-native project instead of a wrapper around the skill text. Keep the first version simple, but make it production-minded, polished, and suitable for the target audience.
 
 ## Source Skill Discovery
 
@@ -49,6 +49,20 @@ Turn the skill into app behavior:
 
 Design the app around the user's actual workflow, not around a generic landing page.
 
+## Product And Design Standard
+
+The generated app must be simple at first, but not rough:
+
+- target a concrete public and usage context
+- make the first screen's primary action obvious
+- use native Apple navigation, tab bars, lists, forms, sheets, toolbars, context menus, and SF Symbols where appropriate
+- support Dynamic Type, dark mode, accessible labels, sensible hit targets, and predictable gestures
+- include empty, loading, error, offline, permission-denied, and success states where relevant
+- use restrained visual styling tailored to the niche, not generic cards or marketing composition
+- avoid placeholder-only flows; include realistic seed/demo data derived from the source skill when useful
+
+Design around repeated use by the final audience.
+
 ## Apple-First Architecture
 
 Use native Apple technologies by default:
@@ -87,7 +101,7 @@ Use official docs for external backend/cloud providers too. Cite the docs used i
 2. Ask the required questions or state assumptions already available.
 3. Choose the app architecture and data model.
 4. Create a native iOS project. Prefer the repo's existing project-generation pattern; otherwise use a simple Xcode project or `project.yml` with XcodeGen when available.
-5. Implement the first useful version: first screen, core workflow, persistence, and at least one realistic seed/example derived from the skill.
+5. Implement the first useful version: first screen, core workflow, persistence, production states, and at least one realistic seed/example derived from the skill.
 6. Add entitlements only when required. Use examples for local config and keep secrets ignored.
 7. Add focused tests for seed data, workflow logic, and risky transformations.
 8. Validate with the most relevant local checks: project generation, `xcodebuild build`, `xcodebuild test`, and simulator launch/screenshot for UI work when feasible.
@@ -99,6 +113,7 @@ Use official docs for external backend/cloud providers too. Cite the docs used i
 - Do not silently add a backend. Ask or explain a concrete necessity first.
 - Do not copy secrets from existing projects into the generated app.
 - Do not overfit to the original skill file structure; build the user's product workflow.
+- Do not ship UI with overlapping text, unstable layout, missing states, or placeholder-only screens.
 - Keep generated projects boring and maintainable: clear folders, small models, simple services, repeatable CLI validation.
 
 ## Final Output

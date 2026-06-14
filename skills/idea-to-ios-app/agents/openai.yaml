@@ -1,0 +1,4 @@
+interface:
+  display_name: "Idea to iOS App"
+  short_description: "Turn product ideas into native iOS apps"
+  default_prompt: "Use $idea-to-ios-app to turn this idea into a native iOS app."

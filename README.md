@@ -42,6 +42,7 @@ scripts/
 ## Skills
 
 - `skill-to-ios-app`: turns an agent skill or workflow into a native Apple-first iOS app plan/project.
+- `idea-to-ios-app`: turns a product idea into a native Apple-first iOS app plan/project.
 
 ## License
 

@@ -2,6 +2,21 @@
 
 Use this reference when turning a skill into an iOS app architecture.
 
+## App Quality Bar
+
+The v1 app should be small, but production-minded:
+
+- one clear primary workflow adapted from the source skill
+- native Apple navigation and controls
+- persistent data where the user expects it
+- realistic seed/demo data when the app would otherwise be empty
+- empty, loading, error, offline, permission, and success states where relevant
+- Dynamic Type, dark mode, accessibility labels, and tappable controls sized for touch
+- repeatable build/test commands
+- secrets excluded from source control
+
+Avoid broad feature lists. Build the smallest coherent app a real target user could try.
+
 ## Decision Table
 
 | Need | Prefer | Use backend when |
@@ -54,6 +69,7 @@ Ask the smallest useful set:
 - Does anything need sync, collaboration, server-side jobs, or external LLMs?
 - Should the app feel utilitarian, premium, playful, clinical, educational, or operational?
 - What must never leave the device?
+- What should be intentionally out of scope for v1?
 
 ## Feature Mapping Patterns
 
@@ -141,6 +157,17 @@ Document:
 - what data crosses the boundary
 - where secrets live
 - failure modes and offline behavior
+
+## Design Rules
+
+- Use native Apple controls first.
+- Use SF Symbols for recognizable actions.
+- Use cards only for repeated objects, not every section.
+- Keep typography matched to context: large only for true page-level hierarchy.
+- Keep forms dense, readable, and predictable for operational apps.
+- Use color semantically and sparingly.
+- Confirm layout on at least one simulator screenshot for substantial UI work.
+- Fix text overlap, truncation, and awkward wrapping before final response.
 
 ## Validation Checklist
 
