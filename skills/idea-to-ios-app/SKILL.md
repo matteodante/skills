@@ -65,6 +65,25 @@ When backend is required, design the smallest boundary and name why it cannot st
 
 Read `references/apple-product-blueprint.md` before planning architecture or writing app code.
 
+## Reference Skills
+
+These installable Agent Skills are the working references for each Apple framework. When one is present, invoke it (and follow its review checklist) before writing code for that area: they encode current iOS 26 / Swift 6 APIs. Use them at the `## Documentation Gate` step instead of, or alongside, raw doc lookups. Do not duplicate their content here.
+
+Source libraries:
+
+- `dpearson2699/swift-ios-skills` — Apple framework skills. Install: `npx skills add dpearson2699/swift-ios-skills`
+- `twostraws/swiftui-agent-skill` — idiomatic SwiftUI. Install: `npx skills add https://github.com/twostraws/swiftui-agent-skill --skill swiftui-pro`
+
+Framework to skill map:
+
+- UI: `swiftui-pro`, `swiftui-patterns`, `swiftui-navigation`, `swiftui-layout-components`, `swiftui-animation`, `swiftui-gestures`, `swiftui-liquid-glass`, `swiftui-performance`, `swiftui-uikit-interop`
+- Persistence and sync: `swiftdata`, `cloudkit`, `core-data`, `swift-codable`
+- System integration: `app-intents`, `widgetkit`, `push-notifications`, `background-processing`, `tipkit`, `app-clips`
+- On-device AI: `apple-on-device-ai` (Foundation Models, `@Generable`, guided generation), `coreml`, `natural-language`, `vision-framework`, `speech-recognition`
+- Identity and security: `authentication` (Sign in with Apple, passkeys), `swift-security`, `cryptokit`
+- Core Swift and quality: `swift-language`, `swift-concurrency`, `swift-architecture`, `swift-testing`, `swift-api-design-guidelines`, `ios-accessibility`, `ios-localization`, `debugging-instruments`
+- Shipping: `app-store-review`, `app-store-optimization`
+
 ## Design Standard
 
 The first version must feel like a real iPhone app for the target audience:
