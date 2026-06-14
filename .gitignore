@@ -1,0 +1,21 @@
+.DS_Store
+
+# Local notes and drafts
+*.local.md
+private/
+drafts/
+
+# Secrets
+.env
+.env.*
+*.pem
+*.p8
+*.key
+*.secret
+
+# Editor and generated files
+.idea/
+.vscode/
+node_modules/
+dist/
+build/
