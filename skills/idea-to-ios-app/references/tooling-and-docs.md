@@ -36,6 +36,7 @@ sh "<skill-dir>/scripts/check-companion-skills.sh" --check ship
 | Skill | Source | Purpose |
 | --- | --- | --- |
 | `competitors` | `coreyhaines31/marketingskills` | current competitive research and honest comparison |
+| `keyword-research` | `coreyhaines31/marketingskills` | optional specialist for country-specific keyword discovery; the bundled discovery protocol remains the fallback |
 | `grilling` | `mattpocock/skills` | dependency-aware product decision rounds |
 | `sosumi` | `https://sosumi.ai` | Apple documentation workflow |
 | `impeccable` | `pbakaus/impeccable` | product context, native audit, polish |
@@ -51,7 +52,7 @@ sh "<skill-dir>/scripts/check-companion-skills.sh" --check ship
 
 Stages are cumulative:
 
-- **discovery**: `competitors`, `grilling`, `impeccable`;
+- **discovery**: `competitors`, `grilling`, `impeccable`; use `keyword-research` when installed, otherwise follow the bundled demand protocol;
 - **build**: discovery plus `sosumi`, `swiftui-pro`, `authentication`, `swift-testing`, and Sosumi MCP;
 - **ship**: build plus review, ASO, capture, and screenshot skills.
 

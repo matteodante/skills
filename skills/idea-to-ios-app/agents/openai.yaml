@@ -1,7 +1,7 @@
 interface:
   display_name: "Idea to iOS App"
-  short_description: "Research, define, build, and ship an iOS app"
-  default_prompt: "Use $idea-to-ios-app to research and challenge this idea with me, get my approval, then set up and build the complete native iOS product repository."
+  short_description: "Validate demand, define, build, and ship an iOS app"
+  default_prompt: "Use $idea-to-ios-app to research and challenge this idea, validate global App Store demand and keyword evidence, get my approval, then set up and build the complete native iOS product repository."
 dependencies:
   tools:
     - type: "mcp"
