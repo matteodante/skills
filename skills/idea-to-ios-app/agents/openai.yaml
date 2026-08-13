@@ -1,4 +1,11 @@
 interface:
   display_name: "Idea to iOS App"
-  short_description: "Turn product ideas into native iOS apps"
-  default_prompt: "Use $idea-to-ios-app to turn this idea into a native iOS app."
+  short_description: "Research, define, build, and ship an iOS app"
+  default_prompt: "Use $idea-to-ios-app to research and challenge this idea with me, get my approval, then set up and build the complete native iOS product repository."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "sosumi"
+      description: "Current Apple documentation through Sosumi"
+      transport: "streamable_http"
+      url: "https://sosumi.ai/mcp"

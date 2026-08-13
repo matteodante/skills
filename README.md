@@ -41,8 +41,16 @@ scripts/
 
 ## Skills
 
-- `skill-to-ios-app`: turns an agent skill or workflow into a native Apple-first iOS app plan/project.
-- `idea-to-ios-app`: turns a product idea into a native Apple-first iOS app plan/project.
+- `idea-to-ios-app`: researches and challenges an idea, gets the product contract approved, then turns an idea, brief, skill, or workflow into a complete tested iOS product repository and optional App Store release.
+
+The skill uses the portable Agent Skills format and can be installed for Codex and Claude Code together:
+
+```bash
+npx skills add matteodante/skills -g -a codex claude-code \
+  -s idea-to-ios-app -y
+```
+
+Its staged `scripts/check-companion-skills.sh` gate checks discovery, Apple development, testing, ASO, and screenshot companion skills for both agents and verifies Sosumi MCP configuration before the stage that needs them.
 
 ## License
 
