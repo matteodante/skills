@@ -52,6 +52,8 @@ npx skills add matteodante/skills -g -a codex claude-code \
 
 Its staged `scripts/check-companion-skills.sh` gate checks discovery, Apple development, testing, ASO, and screenshot companion skills for both agents and verifies Sosumi MCP configuration before the stage that needs them.
 
+During app and website design it can use host-native image generation for authored media. When an agent such as Claude Code has no native generator, it asks the user to select Replicate, another configured provider, or a no-generation fallback before sending data or incurring cost.
+
 ## License
 
 MIT. Only commit content you own or are allowed to publish.

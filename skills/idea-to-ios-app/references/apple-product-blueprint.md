@@ -24,6 +24,7 @@ Implement only the approved contract persisted in `PRODUCT.md`. Confirm it conta
 - core workflow, supporting capabilities, and v1 non-goals;
 - local, synced, shared, server, and never-collected data;
 - monetization and account implications;
+- approved visual direction, media inventory, generator/provider decision, external-processing boundary, and spend limit;
 - locales, phone/iPad expectations, and accessibility constraints;
 - risks that must be prototyped before broad implementation.
 
@@ -116,6 +117,7 @@ app/
     Services/
     DesignSystem/
     Debug/
+  Resources/ or Assets.xcassets/
   Config/
   Tests/Unit/
   Tests/UI/
@@ -123,7 +125,7 @@ app/
 backend/                  # only when justified
 website/
   src or equivalent
-  public/
+  public/media/
 aso/
   metadata/<locale>/
   screenshots-source/
@@ -132,6 +134,7 @@ aso/
 Docs/
   competitive-landscape.md
   decisions/
+    visual-assets.md
   release/
 ```
 
@@ -171,5 +174,6 @@ Document request/response contracts, authentication, data minimization, retentio
 - All reachable production states are intentional.
 - Native navigation, controls, Dynamic Type, VoiceOver, dark mode, Reduce Motion, and supported layouts are verified.
 - Deterministic fixtures serve previews, UI tests, review/demo mode, and marketing capture without changing production semantics.
+- Approved generated media is stored in the repository, documented with provider/model/prompt provenance, optimized for its consuming surface, and verified in context.
 - Build, unit tests, UI tests, and a simulator walkthrough are repeatable from documented commands.
 - No speculative framework or backend remains in the project.

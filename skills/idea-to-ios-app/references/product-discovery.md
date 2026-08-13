@@ -118,6 +118,7 @@ Differentiation, disadvantages, and positioning
 First-session outcome and repeated-use loop
 Prioritized v1 scope and non-goals
 Screen/state map and navigation rationale
+Visual direction, media plan, provider preference, acceptable external processing, and spend boundary
 Domain data, ownership, sync, privacy, permissions
 Guest/account decision and deletion/export lifecycle
 Monetization and cost model

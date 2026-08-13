@@ -47,6 +47,7 @@ sh "<skill-dir>/scripts/check-companion-skills.sh" --check ship
 | `aso` | `coreyhaines31/marketingskills` | ASO research and listing workflow |
 | `ios-marketing-capture` | `ParthJadhav/ios-marketing-capture` | deterministic localized in-app captures |
 | `app-store-screenshots` | `parthjadhav/app-store-screenshots` | marketing composition and export |
+| `imagegen` or equivalent | host-provided capability | optional raster generation/editing for app and website media |
 
 Stages are cumulative:
 
@@ -55,6 +56,8 @@ Stages are cumulative:
 - **ship**: build plus review, ASO, capture, and screenshot skills.
 
 `--check` never installs. `--print-install <stage>` prints commands. `--install <stage>` installs that cumulative set globally for both agents and configures Sosumi for installed CLIs; run it only with authorization.
+
+The checker reports local `imagegen` guidance when found but does not fail when it is absent. Image generation is host-dependent and cannot be made portable through an assumed `npx skills` source. At visual-design time, inspect the active session; if no native generator exists, ask the user to choose Replicate, another configured provider, or no AI media. Replicate requires separate authorization, current-doc verification, an environment token, and spend/data decisions.
 
 After installation, invoke each skill at the stage that owns its work. Do not paraphrase a companion skill's workflow from memory. If a required skill cannot be installed or loaded, stop that stage and report the exact dependency rather than silently substituting a weaker process.
 

@@ -8,7 +8,7 @@ usage() {
   printf '%s\n' \
     'Usage: check-companion-skills.sh [--check|--print-install|--install] [discovery|build|ship|all]' \
     '  discovery  competitors, grilling, and impeccable' \
-    '  build      discovery plus Sosumi, SwiftUI, authentication, and testing' \
+    '  build      discovery plus Sosumi, SwiftUI, authentication, testing, and visual-capability reporting' \
     '  ship       build plus review, ASO, capture, and screenshot skills' \
     '  all        same cumulative set as ship'
 }
@@ -168,6 +168,22 @@ has_skill() {
   project_has_skill "$agent_name" "$skill_name" || global_has_skill "$agent_name" "$skill_name"
 }
 
+has_imagegen_guidance() {
+  agent_name=$1
+  user_home=${HOME:?HOME is required}
+
+  if has_skill "$agent_name" imagegen; then
+    return 0
+  fi
+
+  if [ "$agent_name" = "codex" ]; then
+    codex_root=${CODEX_HOME:-$user_home/.codex}
+    [ -f "$codex_root/skills/.system/imagegen/SKILL.md" ] && return 0
+  fi
+
+  return 1
+}
+
 failed=0
 
 for skill_name in $required_skills; do
@@ -193,6 +209,18 @@ for skill_name in $required_skills; do
 done
 
 if [ "$include_build" -eq 1 ]; then
+  if has_imagegen_guidance codex; then
+    printf '%s\n' 'AVAILABLE: imagegen guidance found for Codex; verify the active session exposes an image-generation tool.'
+  else
+    printf '%s\n' 'OPTIONAL: no imagegen guidance found on disk for Codex; select a provider at visual-design time.'
+  fi
+
+  if has_imagegen_guidance claude-code; then
+    printf '%s\n' 'AVAILABLE: imagegen guidance found for Claude Code; verify the active session exposes an image-generation tool.'
+  else
+    printf '%s\n' 'OPTIONAL: no imagegen guidance found on disk for Claude Code; ask the user to choose Replicate, another provider, or no AI media.'
+  fi
+
   if command -v codex >/dev/null 2>&1; then
     if codex mcp get sosumi --json >/dev/null 2>&1; then
       printf '%s\n' 'OK: Sosumi MCP configured for Codex'

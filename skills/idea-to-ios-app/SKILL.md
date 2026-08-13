@@ -1,6 +1,6 @@
 ---
 name: idea-to-ios-app
-description: Turn an app idea, rough concept, niche, user problem, product brief, existing agent skill, or workflow into a clearly defined, competitively researched, user-approved, native iOS product and complete repository. Use when validating or challenging an iPhone app idea, analyzing its market and competitors, discussing product decisions before implementation, translating a skill into app behavior, designing screens and architecture, building with SwiftUI and Apple frameworks, or preparing tests, ASO, marketing screenshots, a policy/support website, App Store Connect automation, TestFlight, and App Store delivery.
+description: Turn an app idea, rough concept, niche, user problem, product brief, existing agent skill, or workflow into a clearly defined, competitively researched, user-approved, native iOS product and complete repository. Use when validating or challenging an iPhone app idea, analyzing its market and competitors, discussing product decisions before implementation, translating a skill into app behavior, designing screens, websites, generated visual media, and architecture, building with SwiftUI and Apple frameworks, or preparing tests, ASO, marketing screenshots, a policy/support website, App Store Connect automation, TestFlight, and App Store delivery.
 ---
 
 # Idea To iOS App
@@ -65,6 +65,8 @@ Create a proposed product contract in the conversation using the format in `prod
 - competitor landscape, category gap, differentiation, and honest disadvantages;
 - first-session outcome, repeated-use loop, prioritized scope, and non-goals;
 - screen/state map and navigation rationale;
+- visual direction and a media plan for the app, website, icon, and marketing surfaces;
+- visual-media provider decision when the active agent has no native generator or when cost/privacy differs between providers;
 - data ownership, privacy, permissions, account decision, monetization, and backend boundary;
 - acquisition/ASO hypothesis, success metrics, kill criteria, key risks, and validation plan;
 - delivery mode, repository path, app identity, locales/devices, signing constraints, and unresolved items.
@@ -99,14 +101,28 @@ Create and connect:
 
 - root `AGENTS.md`, a concise Claude Code bridge in `CLAUDE.md`, `PRODUCT.md`, and decision/release documentation;
 - `app/` with project generation/configuration, native sources, unit/UI tests, deterministic debug fixtures, and build/capture/archive scripts;
-- `website/` for the showcase, privacy, terms, support/contact, and shared product/legal configuration;
+- `website/` for the showcase, privacy, terms, support/contact, shared product/legal configuration, and production visual assets;
 - `aso/` for versioned localized metadata, research/strategy, raw captures, marketing compositions, and App Store Connect scripts;
 - `backend/` only when the approved product contract proves that the device cannot own a responsibility;
 - CI and documented local commands appropriate to the repository.
 
 Build mode must create the release lanes even when it only implements the first native vertical slice. Do not scatter website, metadata, screenshots, and release scripts across the app project.
 
-## 6. Build The Native Product
+## 6. Visual System And Generated Media
+
+Read `<skill-dir>/references/visual-assets.md` before designing the app screens or website.
+
+1. Use `impeccable` to establish the product's visual world and determine which surfaces need authored media.
+2. Create a visual asset plan before generation: purpose, consuming surface, composition, aspect ratio, variants, accessibility role, performance budget, and destination path.
+3. Inspect the active tool surface. When native image generation and its guidance are available, invoke `imagegen` for raster assets that materially improve the approved design: hero/editorial imagery, illustrations, textures, atmospheric backgrounds, mascots, empty-state art, onboarding media, custom decorative icon families, and app-icon exploration.
+4. When no native generator is available, as may happen in Claude Code, ask the user to choose before sending prompts or assets externally: Replicate, another configured provider, or no AI-generated media. Recommend Replicate only after explaining token setup, usage cost, data transfer, and current model choice. Follow current official provider docs and obtain authorization before installing a client or making paid calls.
+5. Generate assets inside the approved visual direction, inspect the outputs, select deliberately, move final project-bound files into the repository, and integrate them into real app/site layouts. Keep prompts, provider/model/version, cost when available, and provenance in `Docs/decisions/visual-assets.md`.
+6. Use SF Symbols or an established vector/code icon system for functional navigation and controls. Do not generate tiny one-off bitmap icons that reduce consistency, legibility, accessibility, or native platform trust.
+7. If the user chooses no generator, state the limitation. Use code-native/system assets or verified licensed media; do not leave generic placeholders. Pause only when the approved design depends on bespoke raster media that cannot be produced safely.
+
+Generated mockups can guide design, but they are not shippable app UI or App Store screenshots. Marketing screenshots must capture the implemented app.
+
+## 7. Build The Native Product
 
 Implement the approved vertical slice:
 
@@ -123,7 +139,7 @@ Do not require login without significant account-based value. When accounts are 
 
 Use a backend only for approved client-inappropriate work such as secrets, paid external APIs, durable jobs, webhooks, cross-platform identity, collaboration, or server validation.
 
-## 7. Quality And Test Loop
+## 8. Quality And Test Loop
 
 Invoke `swiftui-pro` and selected framework skills during implementation. Then:
 
@@ -131,12 +147,13 @@ Invoke `swiftui-pro` and selected framework skills during implementation. Then:
 2. add deterministic XCUITest coverage for launch, first outcome, persistence, settings, and account flows that exist;
 3. separate offline seeded UI tests from opt-in live, paid, destructive, or backend E2E suites;
 4. verify Dynamic Type, VoiceOver, Reduce Motion, appearances, localization expansion, keyboard, phone, and supported iPad layouts;
-5. generate/build, test, launch the simulator, and inspect the whole representative path;
-6. invoke `impeccable` for native audit and polish, resolve verified P0/P1 findings, and re-run the audit.
+5. verify generated media at real breakpoints/device sizes for crop, contrast, loading, memory, scale, accessibility, and appearance variants;
+6. generate/build, test, launch the simulator, and inspect the whole representative path;
+7. invoke `impeccable` for native audit and polish, resolve verified P0/P1 findings, and re-run the audit.
 
 A green build does not prove product or visual correctness.
 
-## 8. Ship Pipeline
+## 9. Ship Pipeline
 
 For Ship mode, read `<skill-dir>/references/release-blueprint.md` and run `sh "<skill-dir>/scripts/check-companion-skills.sh" --check ship` before release work.
 
@@ -160,6 +177,7 @@ Use fictional data in marketing/review assets. Show the real app in use rather t
 - Do not silently install tools, change signing, deploy, upload, edit live metadata, or submit.
 - Do not commit `.p8`, provisioning profiles, tokens, `.env`, personal data, or unsafe captures.
 - Keep deterministic capture/test paths compile-gated and isolated from release behavior.
+- Do not use generated imagery to fabricate product behavior, customer evidence, people, endorsements, awards, ratings, or screenshots.
 
 ## Final Handoff
 

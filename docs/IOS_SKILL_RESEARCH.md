@@ -36,6 +36,13 @@ Research snapshot: 2026-08-13. `idea-to-ios-app` must re-fetch market evidence, 
 - A privacy-policy URL is part of App Store Connect app privacy configuration. The release workflow builds and verifies live privacy and support pages before submission. Source: [Manage app privacy](https://developer.apple.com/help/app-store-connect/manage-app-information/manage-app-privacy/).
 - App Store Connect supports API-based asset upload. The generated operator must follow the current create/upload/commit lifecycle, remain read-only by default, and require confirmation for mutations. Source: [Uploading assets to App Store Connect](https://developer.apple.com/documentation/appstoreconnectapi/uploading-assets-to-app-store-connect).
 
+## Generated Visual Media
+
+- The skill treats generated imagery as authored product material for approved app and website compositions, while preserving SF Symbols and vector/code icon systems for functional controls.
+- Codex may use its host-native `imagegen` workflow. If Claude Code or another host exposes no native generator, the skill asks the user to choose Replicate, another configured provider, or no AI-generated media.
+- Replicate uses API tokens for authenticated requests and supports client/HTTP prediction workflows. The skill requires `REPLICATE_API_TOKEN` through the local environment, current model/pricing verification, explicit paid-call authorization, bounded generation, and local download/provenance records. Sources: [Replicate Node.js guide](https://replicate.com/docs/get-started/nodejs), [prediction lifecycle](https://replicate.com/docs/topics/predictions/create-a-prediction), [output files](https://replicate.com/docs/topics/predictions/output-files), [data retention](https://replicate.com/docs/topics/predictions/data-retention), [API tokens](https://replicate.com/docs/topics/security/api-tokens), and [pricing](https://replicate.com/pricing).
+- Generated concept comps do not count as implemented app screens or App Store screenshots. Release assets must show the real app with deterministic fictional data.
+
 ## Maestro Patterns Retained
 
 The local Maestro project supplied by the user was used only as a process reference. The consolidated skill retains:
