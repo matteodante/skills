@@ -1,40 +1,16 @@
 ---
 name: replace-with-skill-name
-description: Use when the user asks for a specific recurring task this skill handles.
+description: "[TODO: State the concrete task this skill handles and when it applies.]"
 ---
 
-# Replace With Skill Name
+# [TODO: Skill title]
 
-## When to Use
-
-Use this skill when:
-
-- the user asks for the recurring task directly
-- the repository or workflow clearly matches this skill
-
-Do not use it when:
-
-- the task is unrelated
-- the work needs a different specialist skill
+[TODO: State the outcome and the scope of this workflow.]
 
 ## Workflow
 
-1. Gather the smallest useful context.
-2. Identify the exact scope.
-3. Make the change or produce the requested artifact.
-4. Validate the result with the fastest reliable check.
-5. Summarize what changed and what remains.
+[TODO: Describe the decisions and actions needed for this task. Reuse existing context and authorization. Link supporting resources only where they are needed.]
 
-## Safety
+## Verification and Handoff
 
-- Do not expose secrets.
-- Do not rewrite unrelated files.
-- Prefer local project conventions over inventing new ones.
-
-## Output
-
-Return a concise final answer with:
-
-- changed files or produced artifact
-- validation performed
-- any remaining risk or manual step
+[TODO: Define observable completion evidence and how to report unavailable checks or unresolved work.]

@@ -1,6 +1,6 @@
 # Visual Assets And Image Generation
 
-Use this reference after product approval and Impeccable's visual direction work, before building app screens or the website.
+Read when the requested design includes imagery, generated assets, or media integration. Establish the visual direction first, using `impeccable` when available. Preserve the approved product contract when initializing another skill's context.
 
 ## Contents
 
@@ -35,7 +35,7 @@ Inspect the active agent's available skills and tools immediately before visual 
 
 - When `imagegen` and a native image-generation tool are available, read and follow the installed `imagegen` instructions. Recommend its built-in generation path because it avoids separate provider credentials and setup, unless the user already chose another provider.
 - Claude Code and Codex may expose different image tools. Keep the asset brief tool-neutral.
-- If the active host has no native generator, ask one decision question before generation: use Replicate, use another provider already configured by the user, or proceed without AI-generated media. Include your recommendation and the cost/privacy/setup tradeoff.
+- If the active host has no native generator and bespoke raster media is needed, reuse an approved provider choice or ask one decision question: use a configured provider, choose Replicate, or proceed without generated media. Include the cost/privacy/setup tradeoff. If no generated asset is needed, continue without a provider question.
 - If multiple providers are available and the choice changes cost, data handling, fidelity, licensing, or reproducibility, let the user choose. Reuse a provider decision already approved in `PRODUCT.md` unless its terms or suitability changed.
 - Do not assume that a skill file proves the current session can call an image tool.
 - Do not install a paid API, request credentials, or switch to a CLI/API fallback without the authorization required by the loaded image-generation workflow.
@@ -45,19 +45,19 @@ Image generation is a conditional creative capability rather than a hard prerequ
 
 ### Replicate path
 
-Use Replicate only after the user selects it and authorizes any dependency installation and paid prediction. At execution time:
+Use Replicate only within the user's provider, data, and spend authorization. Reuse existing authority instead of requesting it for every call. At execution time:
 
 1. Fetch current official [Node.js/client guidance](https://replicate.com/docs/get-started/nodejs), [prediction lifecycle](https://replicate.com/docs/topics/predictions/create-a-prediction), [output-file handling](https://replicate.com/docs/topics/predictions/output-files), [data retention](https://replicate.com/docs/topics/predictions/data-retention), [API-token guidance](https://replicate.com/docs/topics/security/api-tokens), security terms, and [pricing](https://replicate.com/pricing).
 2. Recommend a current model from live Replicate documentation/catalog evidence for the asset type. Present model owner/name, version behavior, relevant price basis, strengths, limitations, and data implications. Do not preserve a default model name or version in this skill.
 3. Ask the user to set `REPLICATE_API_TOKEN` in their local environment. Never ask them to paste the token in chat, write it into source files, or commit it.
 4. Use the official client or HTTP API according to the project language and current docs. Prefer a small project-local script with explicit inputs, output directory, bounded polling/timeouts, errors, and sanitized logs over an undocumented one-off request.
-5. Confirm the expected number of predictions or spend boundary before multi-candidate generation. A request for one asset does not authorize an unbounded variation loop.
+5. Establish a prediction count or spend boundary before multi-candidate generation when none is already agreed. Stop at that boundary; a request for one asset does not authorize an unbounded variation loop.
 6. Download selected outputs into the project before provider URLs expire or retention rules remove them. Record prediction ID, provider, model/version, prompt, parameters, date, output path, and cost/metrics when returned; never record the token.
 7. Remove rejected remote predictions or inputs when the current API and the user's retention decision support deletion. Do not upload private, personal, licensed, or client-confidential media without explicit authorization.
 
 ## 3. Asset Plan
 
-Create `Docs/decisions/visual-assets.md` and an inventory before generating. For each asset record:
+For a set of generated assets, record the plan in `Docs/decisions/visual-assets.md`. For a single asset, a short entry in existing design notes is enough. Keep fields relevant to the asset:
 
 - stable ID and purpose;
 - app screen, website section, App Store surface, or icon slot that consumes it;
@@ -106,7 +106,7 @@ Store production assets through the project's asset catalog or established resou
 
 Use generated imagery when the showcase needs a memorable visual thesis, real atmosphere, or narrative media unavailable from product captures. Strong candidates include a full-bleed hero scene, editorial illustration, product-world collage, section transitions, texture systems, and focused supporting art.
 
-- Match the approved Persuade surface and `DESIGN.md`; do not paste a generic generated image above ordinary SaaS sections.
+- Match the approved website purpose and `DESIGN.md`; compose imagery around the actual product story.
 - Reserve copy-safe negative space from the prompt and validate real responsive crops.
 - Prefer product captures for proof. Generated media can frame or dramatize the product but cannot replace evidence.
 - Export responsive sizes and modern formats through the website's image pipeline. Preserve a high-quality source when future crops are likely.
@@ -137,7 +137,7 @@ Delete unused drafts from production bundles. Keep only approved source files an
 ## 9. Safety And Truthfulness
 
 - Do not generate a real person's likeness, customer story, testimonial, endorsement, award, rating, press logo, or usage evidence without authorization and a truthful source.
-- Do not imitate a living artist, competitor, trademarked character, protected brand world, or copyrighted asset library.
+- Follow the active generator's content rules and use brand/reference material within the user's rights and authorized scope. Do not pass copied assets off as original work.
 - Label synthetic examples when users could mistake them for collected customer data or real events.
 - Do not use generated UI as an App Store screenshot. Capture the implemented app with deterministic fictional data.
 - Do not let generated art imply a capability, integration, device, result, or regulated outcome the app does not provide.

@@ -1,252 +1,192 @@
 #!/bin/sh
 set -eu
 
-mode=${1:---check}
-stage=${2:-all}
-
 usage() {
-  printf '%s\n' \
-    'Usage: check-companion-skills.sh [--check|--print-install|--install] [discovery|build|ship|all]' \
-    '  discovery  competitors, grilling, and impeccable' \
-    '  build      discovery plus Sosumi, SwiftUI, authentication, testing, and visual-capability reporting' \
-    '  ship       build plus review, ASO, capture, and screenshot skills' \
-    '  all        same cumulative set as ship'
+  printf '%s\n' 'Usage: check-companion-skills.sh [--check|--print-install|--install] [discovery|build|ship|all] --agent codex|claude-code|all
+  discovery      competitor-profiling and grilling (default stage)
+  build          discovery plus design, Apple docs, SwiftUI, and testing
+  ship, all      build plus review, ASO, and marketing captures
+  --check        read-only check of local companion files and MCP configuration
+  --print-install  print commands for missing companions; perform no writes
+  --install      install missing companions globally for the selected agent(s)
+
+Exit codes: 0 = selected checks passed, 1 = missing companions, 2 = invalid
+arguments. Installer failures propagate. File presence does not prove session availability.
+Only use --install when the user has authorized installation and MCP setup.'
 }
 
+mode=${1:---check}
+if [ "$#" -gt 0 ]; then shift; fi
 case "$mode" in
   --check|--print-install|--install) ;;
-  -h|--help)
-    usage
-    exit 0
-    ;;
-  *)
-    usage >&2
-    exit 2
-    ;;
+  -h|--help) usage; exit 0 ;;
+  *) usage >&2; exit 2 ;;
 esac
 
-case "$stage" in
-  discovery|build|ship|all) ;;
-  *)
-    usage >&2
-    exit 2
-    ;;
+stage=discovery
+case "${1:-}" in
+  discovery|build|ship|all) stage=$1; shift ;;
 esac
 
-discovery_skills='competitors grilling impeccable'
-build_skills='sosumi swiftui-pro authentication swift-testing'
-ship_skills='app-store-review app-store-optimization aso ios-marketing-capture app-store-screenshots'
-
-case "$stage" in
-  discovery) required_skills=$discovery_skills ;;
-  build) required_skills="$discovery_skills $build_skills" ;;
-  ship|all) required_skills="$discovery_skills $build_skills $ship_skills" ;;
-esac
-
-include_build=0
-include_ship=0
-case "$stage" in
-  build) include_build=1 ;;
-  ship|all) include_build=1; include_ship=1 ;;
-esac
-
-print_discovery_install() {
-  printf '%s\n' \
-    'npx --yes skills add coreyhaines31/marketingskills -g -a codex claude-code -s competitors -y' \
-    'npx --yes skills add mattpocock/skills -g -a codex claude-code -s grilling -y' \
-    'npx --yes skills add pbakaus/impeccable -g -a codex claude-code -s impeccable -y'
-}
-
-print_build_install() {
-  printf '%s\n' \
-    'npx --yes skills add https://sosumi.ai -g -a codex claude-code -s sosumi -y' \
-    'npx --yes skills add twostraws/swiftui-agent-skill -g -a codex claude-code -s swiftui-pro -y' \
-    'npx --yes skills add dpearson2699/swift-ios-skills -g -a codex claude-code -s authentication swift-testing -y' \
-    'codex mcp add sosumi --url https://sosumi.ai/mcp' \
-    'claude mcp add --transport http --scope user sosumi https://sosumi.ai/mcp'
-}
-
-print_ship_install() {
-  printf '%s\n' \
-    'npx --yes skills add dpearson2699/swift-ios-skills -g -a codex claude-code -s app-store-review app-store-optimization -y' \
-    'npx --yes skills add coreyhaines31/marketingskills -g -a codex claude-code -s aso -y' \
-    'npx --yes skills add ParthJadhav/ios-marketing-capture -g -a codex claude-code -s ios-marketing-capture -y' \
-    'npx --yes skills add parthjadhav/app-store-screenshots -g -a codex claude-code -s app-store-screenshots -y'
-}
-
-print_install() {
-  print_discovery_install
-  if [ "$include_build" -eq 1 ]; then
-    print_build_install
-  fi
-  if [ "$include_ship" -eq 1 ]; then
-    print_ship_install
-  fi
-}
-
-if [ "$mode" = "--print-install" ]; then
-  print_install
-  exit 0
+agent=''
+if [ "$#" -eq 2 ] && [ "$1" = "--agent" ]; then
+  agent=$2
+else
+  usage >&2
+  exit 2
 fi
+case "$agent" in
+  codex|claude-code) selected_agents=$agent ;;
+  all) selected_agents='codex claude-code' ;;
+  *) usage >&2; exit 2 ;;
+esac
+case "$stage" in
+  discovery) stage_level=1 ;;
+  build) stage_level=2 ;;
+  ship|all) stage_level=3 ;;
+esac
 
-if [ "$mode" = "--install" ]; then
-  if ! command -v npx >/dev/null 2>&1; then
-    printf '%s\n' 'ERROR: Node.js with npx is required for installation.' >&2
-    exit 1
-  fi
+# Each row is used by checking, command previews, and installation.
+companions='1|competitor-profiling|coreyhaines31/marketingskills
+1|grilling|mattpocock/skills
+2|impeccable|pbakaus/impeccable
+2|sosumi|https://sosumi.ai
+2|swiftui-pro|twostraws/swiftui-agent-skill
+2|swift-testing|dpearson2699/swift-ios-skills
+3|app-store-review|dpearson2699/swift-ios-skills
+3|app-store-optimization|dpearson2699/swift-ios-skills
+3|aso|coreyhaines31/marketingskills
+3|ios-marketing-capture|ParthJadhav/ios-marketing-capture
+3|app-store-screenshots|parthjadhav/app-store-screenshots'
 
-  npx --yes skills add coreyhaines31/marketingskills -g -a codex claude-code -s competitors -y
-  npx --yes skills add mattpocock/skills -g -a codex claude-code -s grilling -y
-  npx --yes skills add pbakaus/impeccable -g -a codex claude-code -s impeccable -y
-
-  if [ "$include_build" -eq 1 ]; then
-    npx --yes skills add https://sosumi.ai -g -a codex claude-code -s sosumi -y
-    npx --yes skills add twostraws/swiftui-agent-skill -g -a codex claude-code -s swiftui-pro -y
-    npx --yes skills add dpearson2699/swift-ios-skills -g -a codex claude-code -s authentication swift-testing -y
-
-    if command -v codex >/dev/null 2>&1 && ! codex mcp get sosumi --json >/dev/null 2>&1; then
-      codex mcp add sosumi --url https://sosumi.ai/mcp
-    fi
-    if command -v claude >/dev/null 2>&1 && ! claude mcp get sosumi >/dev/null 2>&1; then
-      claude mcp add --transport http --scope user sosumi https://sosumi.ai/mcp
-    fi
-  fi
-
-  if [ "$include_ship" -eq 1 ]; then
-    npx --yes skills add dpearson2699/swift-ios-skills -g -a codex claude-code -s app-store-review app-store-optimization -y
-    npx --yes skills add coreyhaines31/marketingskills -g -a codex claude-code -s aso -y
-    npx --yes skills add ParthJadhav/ios-marketing-capture -g -a codex claude-code -s ios-marketing-capture -y
-    npx --yes skills add parthjadhav/app-store-screenshots -g -a codex claude-code -s app-store-screenshots -y
-  fi
-fi
-
-project_has_skill() {
-  agent_name=$1
-  skill_name=$2
-  search_dir=${PWD}
+has_skill() (
+  target_agent=$1
+  target_skill=$2
+  search_dir=$(pwd -P)
+  project_root=$(git rev-parse --show-toplevel 2>/dev/null) || project_root=$search_dir
+  project_root=$(cd "$project_root" && pwd -P)
 
   while :; do
-    case "$agent_name" in
-      codex)
-        [ -f "$search_dir/.agents/skills/$skill_name/SKILL.md" ] && return 0
-        [ -f "$search_dir/.codex/skills/$skill_name/SKILL.md" ] && return 0
-        ;;
-      claude-code)
-        [ -f "$search_dir/.claude/skills/$skill_name/SKILL.md" ] && return 0
-        ;;
+    case "$target_agent" in
+      codex) skill_path="$search_dir/.agents/skills/$target_skill/SKILL.md" ;;
+      claude-code) skill_path="$search_dir/.claude/skills/$target_skill/SKILL.md" ;;
     esac
-
-    [ "$search_dir" = "/" ] && break
-    parent_dir=$(dirname -- "$search_dir")
-    [ "$parent_dir" = "$search_dir" ] && break
-    search_dir=$parent_dir
+    [ -f "$skill_path" ] && exit 0
+    [ "$search_dir" = "$project_root" ] && break
+    [ "$search_dir" = / ] && break
+    search_dir=$(dirname "$search_dir")
   done
 
-  return 1
-}
-
-global_has_skill() {
-  agent_name=$1
-  skill_name=$2
-  user_home=${HOME:?HOME is required}
-
-  case "$agent_name" in
+  case "$target_agent" in
     codex)
-      codex_root=${CODEX_HOME:-$user_home/.codex}
-      [ -f "$user_home/.agents/skills/$skill_name/SKILL.md" ] ||
-        [ -f "$codex_root/skills/$skill_name/SKILL.md" ]
+      codex_root=${CODEX_HOME:-${HOME:?HOME is required}/.codex}
+      [ -f "$HOME/.agents/skills/$target_skill/SKILL.md" ] ||
+        [ -f "$codex_root/skills/$target_skill/SKILL.md" ] ||
+        [ -f "$codex_root/skills/.system/$target_skill/SKILL.md" ]
       ;;
     claude-code)
-      [ -f "$user_home/.claude/skills/$skill_name/SKILL.md" ]
+      [ -f "${HOME:?HOME is required}/.claude/skills/$target_skill/SKILL.md" ]
       ;;
+  esac
+)
+
+has_sosumi() {
+  case "$1" in
+    codex) codex mcp get sosumi --json >/dev/null 2>&1 ;;
+    claude-code) claude mcp get sosumi >/dev/null 2>&1 ;;
   esac
 }
 
-has_skill() {
-  agent_name=$1
-  skill_name=$2
-  project_has_skill "$agent_name" "$skill_name" || global_has_skill "$agent_name" "$skill_name"
-}
-
-has_imagegen_guidance() {
-  agent_name=$1
-  user_home=${HOME:?HOME is required}
-
-  if has_skill "$agent_name" imagegen; then
-    return 0
-  fi
-
-  if [ "$agent_name" = "codex" ]; then
-    codex_root=${CODEX_HOME:-$user_home/.codex}
-    [ -f "$codex_root/skills/.system/imagegen/SKILL.md" ] && return 0
-  fi
-
-  return 1
+configure_sosumi() {
+  case "$1" in
+    codex) codex mcp add sosumi --url https://sosumi.ai/mcp ;;
+    claude-code) claude mcp add --transport http --scope user sosumi https://sosumi.ai/mcp ;;
+  esac
 }
 
 failed=0
-
-for skill_name in $required_skills; do
-  missing_for=''
-
-  if ! has_skill codex "$skill_name"; then
-    missing_for='Codex'
-  fi
-  if ! has_skill claude-code "$skill_name"; then
-    if [ -n "$missing_for" ]; then
-      missing_for="$missing_for, Claude Code"
-    else
-      missing_for='Claude Code'
+for target_agent in $selected_agents; do
+  for companion in $companions; do
+    level=${companion%%|*}
+    package=${companion#*|}
+    skill=${package%%|*}
+    source=${package#*|}
+    [ "$level" -le "$stage_level" ] || continue
+    if has_skill "$target_agent" "$skill"; then
+      if [ "$mode" = "--check" ]; then
+        printf 'FOUND: %s (%s)\n' "$skill" "$target_agent"
+      fi
+      continue
     fi
-  fi
 
-  if [ -n "$missing_for" ]; then
-    printf 'MISSING: %s (%s)\n' "$skill_name" "$missing_for"
-    failed=1
-  else
-    printf 'OK: %s (Codex, Claude Code)\n' "$skill_name"
+    case "$mode" in
+      --check)
+        printf 'MISSING: %s (%s)\n' "$skill" "$target_agent"
+        failed=1
+        ;;
+      --print-install)
+        printf 'npx --yes skills add %s -g -a %s -s %s -y\n' "$source" "$target_agent" "$skill"
+        ;;
+      --install)
+        if ! command -v npx >/dev/null 2>&1; then
+          printf '%s\n' 'ERROR: Node.js with npx is required for installation.' >&2
+          exit 1
+        fi
+        npx --yes skills add "$source" -g -a "$target_agent" -s "$skill" -y
+        if ! has_skill "$target_agent" "$skill"; then
+          printf 'ERROR: installer completed but %s is not visible for %s. Inspect its output.\n' "$skill" "$target_agent" >&2
+          exit 1
+        fi
+        ;;
+    esac
+  done
+
+  if [ "$stage_level" -ge 2 ]; then
+    if [ "$mode" = "--check" ]; then
+      if has_skill "$target_agent" imagegen; then
+        printf 'OPTIONAL: imagegen guidance found (%s); verify the session tool.\n' "$target_agent"
+      else
+        printf 'OPTIONAL: imagegen guidance not found (%s); use the approved media plan.\n' "$target_agent"
+      fi
+    fi
+    case "$target_agent" in
+      codex) agent_cli=codex ;;
+      claude-code) agent_cli=claude ;;
+    esac
+    if ! command -v "$agent_cli" >/dev/null 2>&1; then
+      printf '# UNVERIFIED: %s CLI unavailable; check Sosumi in the active session.\n' "$target_agent"
+    elif has_sosumi "$target_agent"; then
+      if [ "$mode" = "--check" ]; then
+        printf 'CONFIGURED: Sosumi (%s); active tools still need verification.\n' "$target_agent"
+      fi
+    else
+      case "$mode" in
+        --check)
+          printf 'MISSING: Sosumi MCP configuration (%s); direct Apple docs are a fallback.\n' "$target_agent"
+          failed=1
+          ;;
+        --print-install)
+          case "$target_agent" in
+            codex) printf '%s\n' 'codex mcp add sosumi --url https://sosumi.ai/mcp' ;;
+            claude-code) printf '%s\n' 'claude mcp add --transport http --scope user sosumi https://sosumi.ai/mcp' ;;
+          esac
+          ;;
+        --install)
+          configure_sosumi "$target_agent"
+          if ! has_sosumi "$target_agent"; then
+            printf 'ERROR: Sosumi configuration could not be verified (%s).\n' "$target_agent" >&2
+            exit 1
+          fi
+          ;;
+      esac
+    fi
   fi
 done
 
-if [ "$include_build" -eq 1 ]; then
-  if has_imagegen_guidance codex; then
-    printf '%s\n' 'AVAILABLE: imagegen guidance found for Codex; verify the active session exposes an image-generation tool.'
-  else
-    printf '%s\n' 'OPTIONAL: no imagegen guidance found on disk for Codex; select a provider at visual-design time.'
-  fi
-
-  if has_imagegen_guidance claude-code; then
-    printf '%s\n' 'AVAILABLE: imagegen guidance found for Claude Code; verify the active session exposes an image-generation tool.'
-  else
-    printf '%s\n' 'OPTIONAL: no imagegen guidance found on disk for Claude Code; ask the user to choose Replicate, another provider, or no AI media.'
-  fi
-
-  if command -v codex >/dev/null 2>&1; then
-    if codex mcp get sosumi --json >/dev/null 2>&1; then
-      printf '%s\n' 'OK: Sosumi MCP configured for Codex'
-    else
-      printf '%s\n' 'MISSING: Sosumi MCP configuration for Codex'
-      failed=1
-    fi
-  else
-    printf '%s\n' 'SKIP: Codex CLI is not installed; Codex skill files were still checked.'
-  fi
-
-  if command -v claude >/dev/null 2>&1; then
-    if claude mcp get sosumi >/dev/null 2>&1; then
-      printf '%s\n' 'OK: Sosumi MCP configured for Claude Code'
-    else
-      printf '%s\n' 'MISSING: Sosumi MCP configuration for Claude Code'
-      failed=1
-    fi
-  else
-    printf '%s\n' 'SKIP: Claude Code CLI is not installed; Claude skill files were still checked.'
-  fi
-fi
-
 if [ "$failed" -ne 0 ]; then
-  printf '\nRun with --print-install %s for exact commands, or --install %s after authorization.\n' "$stage" "$stage"
+  printf '\nInspect --print-install %s --agent %s, or use the documented fallbacks.\n' "$stage" "$agent"
   exit 1
 fi
-
-printf 'Companion skills are ready for the %s stage in Codex and Claude Code.\n' "$stage"
+if [ "$mode" != "--print-install" ]; then
+  printf 'Selected local checks passed (%s, %s). Verify active-session capabilities separately.\n' "$stage" "$agent"
+fi

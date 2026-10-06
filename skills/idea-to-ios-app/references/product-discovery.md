@@ -1,6 +1,6 @@
 # Product Discovery And Approval
 
-Use this reference before any design, repository scaffolding, architecture, or implementation.
+Use this reference for a new product or a material unresolved product decision. Reuse matching approved documents and conversation decisions for an existing app. Scale research to the requested decision; do not restart discovery for a scoped implementation or release task.
 
 ## Contents
 
@@ -80,11 +80,11 @@ Produce:
 - strongest reasons the proposed idea may fail;
 - questions the research cannot answer without primary customer evidence.
 
-Invoke `competitors` for its honesty, research depth, use-case comparison, and centralized evidence principles. Do not create SEO comparison pages during discovery.
+Use `competitor-profiling` when available after finding relevant product URLs. Follow this protocol directly when it is unavailable. The `competitors` skill concerns SEO comparison pages and is not required for product discovery.
 
 ## 3. Design Tree Discussion
 
-Invoke `grilling`. Ask questions in dependency-aware rounds and wait after each round.
+Use `grilling` when available, or follow the decision branches below. Ask short rounds of consequential questions and wait for decisions the next step needs. Continue independent research while waiting. Do not re-ask answered questions or make the user exhaust every branch before useful work can continue.
 
 Suggested branches:
 
@@ -108,7 +108,7 @@ Challenge weak assumptions. Ask what result would disprove the idea, why the use
 
 ## 4. Global Search Demand And Keyword Validation
 
-Run this protocol after the user, job, first outcome, and differentiation are specific enough to produce realistic searches, and before proposing the product contract. Invoke `keyword-research` when installed; otherwise follow this protocol directly. In either case, treat the evidence rules below as authoritative when a keyword tool requests metrics that are unavailable.
+Run this protocol after the user, job, first outcome, and differentiation are specific enough to produce realistic searches, and before proposing a new product contract. An available keyword specialist can help, but this protocol stands on its own. Do not assume a provider exposes a metric or that a companion named `keyword-research` exists.
 
 ### Market Scope
 
@@ -116,12 +116,12 @@ Do not equate “global” with the user's country or with the US alone.
 
 - For an English-first global hypothesis, use the US as the anchor and compare at least the UK, Canada, and Australia.
 - Add one or more category-relevant non-English storefronts when language, regulation, culture, purchasing power, or local incumbents could change the opportunity.
-- For an explicitly local product, analyze the target storefront and at least one benchmark market; do not generalize local demand globally.
+- For an explicitly local product, analyze the target storefront; add a benchmark market when it helps the decision. Do not generalize local demand globally.
 - Record storefront country code, query language, locale, currency, and access date. Explain why the selected markets represent the hypothesis.
 
 ### Keyword Universe
 
-Generate a working set broad enough to challenge the positioning, normally 20–50 queries, across:
+Start with a focused set of queries that can challenge the positioning. Expand when the first results leave a meaningful gap, rather than meeting a keyword quota. Cover relevant combinations of:
 
 - category and solution terms;
 - user problem and desired-outcome language;
@@ -142,7 +142,7 @@ Prefer current evidence in this order:
 4. **App Store listings and review feeds**: use ratings/reviews, pricing, monetization, update cadence, and recurring review themes as traction and competition evidence, not query demand.
 5. **Current trend or web-search sources**: use them for direction, seasonality, or broader problem awareness. Label them as non-App-Store signals.
 
-Account access does not authorize mutations. Never create a campaign, accept suggested keywords, alter bids or budgets, add billing, or spend money without separate user approval.
+Account access alone does not authorize mutations. Creating campaigns, altering bids or budgets, adding billing, or spending money requires authority for that action. Reuse explicit authorization already supplied, including its budget and stop criteria.
 
 ### Evidence Matrix
 
@@ -152,7 +152,7 @@ For every serious keyword candidate capture:
 | --- | --- |
 | Keyword and cluster | Exact query and its problem/category/audience/long-tail role |
 | Market | Storefront, language, and locale |
-| Relevance and intent | Evidence-backed fit with the approved job; manual judgments must be labeled |
+| Relevance and intent | Evidence-backed fit with the proposed job; manual judgments must be labeled |
 | Demand | Exact volume, estimate, relative popularity, or `unverified`, with provider and scale |
 | Competition | Relevant top results, exact-title matches, dominant brands, and top-result rating/review distribution |
 | Commercial signal | Visible pricing, subscriptions/IAP, and paid alternatives |
@@ -186,7 +186,7 @@ The final product contract must preserve this evidence and cannot describe the p
 
 ## 5. Proposed Product Contract
 
-Present the contract in the conversation before writing project files:
+Present the contract before scaffolding app code for a new idea. If the user requested a written report or draft, save that artifact within the authorized scope while the product remains unapproved:
 
 ```text
 Product thesis
@@ -214,11 +214,9 @@ The contract must be specific enough that two capable implementers would build t
 
 ## 6. Approval
 
-End with a direct request:
+When product approval is missing, present the concrete contract and ask the user to approve or revise it in their language. For Define mode, approval records a product decision; it does not silently start implementation. For Build or Ship, identify the next work the approval covers.
 
-> Questa è la definizione di prodotto che userò come vincolo. Vuoi modificarla oppure la approvi e mi autorizzi a impostare la repository e iniziare l'esecuzione?
-
-Wait for an explicit approval. A partial answer, silence, or approval of one section does not authorize implementation. Apply revisions, show the updated contract, and request approval again.
+A matching approved brief, prior conversation approval, or explicit instruction to build the defined scope is sufficient. Do not ask for the same approval again. A partial answer or silence does not fill an unresolved decision. If the user explicitly chooses to proceed with limited evidence, record the accepted uncertainty and continue within that scope.
 
 After approval, write:
 
@@ -228,4 +226,4 @@ After approval, write:
 - `Docs/decisions/product-approval.md`: approval statement, date, approved scope, unresolved accepted risks;
 - `Docs/decisions/*.md`: later architecture/product decisions that preserve traceability.
 
-Any later request that changes target user, core outcome, monetization, account model, data boundary, or v1 scope returns to this approval gate before implementation continues.
+A material change proposed by the agent needs user agreement before implementation. A user's explicit change request supplies authority for that change; update the record and clarify only consequential details that remain unresolved.

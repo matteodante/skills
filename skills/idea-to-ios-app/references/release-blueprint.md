@@ -1,6 +1,6 @@
 # Release Blueprint
 
-Use this reference for Ship mode. Treat release engineering as part of the product, but keep every external mutation explicit and recoverable.
+Use this reference for Ship mode or the specific release work requested. Reuse approved product decisions and existing release tools. Prepare and inspect the concrete result before any external action that still needs authorization; do not ask again for actions already authorized.
 
 ## Contents
 
@@ -47,7 +47,7 @@ Generated outputs, archives, videos, screenshots, tokens, `.p8` keys, and local 
 
 Maintain distinct lanes:
 
-1. **Unit/domain**: deterministic Swift Testing tests for models, rules, migrations, formatting, and service seams.
+1. **Unit/domain**: deterministic tests for models, rules, migrations, formatting, and real integration boundaries. Preserve the existing framework; prefer Swift Testing for new suites where supported.
 2. **UI smoke**: deterministic XCUITest flows using seeded local data and disabled cloud/network dependencies where possible.
 3. **Integration**: opt-in tests against owned backend/sandbox services.
 4. **Live/paid/destructive**: explicit environment flag, isolated test account, cost/risk warning, and never part of the default scheme.
@@ -65,19 +65,19 @@ Before metadata or upload:
 - reconcile code/SDK behavior with `PrivacyInfo.xcprivacy`, required-reason APIs, permission usage strings, ATT choice, privacy labels, and the live privacy policy;
 - verify every entitlement and background mode is used and explained;
 - ensure login is justified; if account creation exists, verify in-app deletion end to end;
-- prepare a review account or deterministic demo mode when review cannot reach the feature otherwise;
+- prepare a review account or disclosed demo path reachable in the submitted Release configuration when review cannot reach the feature otherwise; a DEBUG-only capture host cannot provide reviewer access;
 - ensure backend services are live and review notes explain non-obvious hardware, permissions, subscriptions, or flows;
 - use fictional data in review and marketing assets.
 
-Invoke `app-store-review` and resolve its blockers. Fetch the current App Review Guidelines and App Store Connect privacy help with Sosumi immediately before the audit.
+Use `app-store-review` when available and resolve verified blockers. Otherwise follow the checks above using current Apple guidance. Fetch App Review and App Store Connect privacy guidance through Sosumi or direct Apple documentation before the audit.
 
 ## 4. Showcase, Policy, And Support Website
 
-Ship a fast public website on a stable HTTPS domain before submission. It must contain:
+Provide the required public information on stable HTTPS URLs before submission. Reuse an existing product website or suitable hosted pages; a new website application is not mandatory. Include:
 
 - a product page with accurate value proposition, real app imagery, App Store link when available, and no unsupported claims;
 - `/privacy/` with app-specific collection, processing, retention, deletion, third parties, contact, and effective date;
-- `/terms/` matched to accounts, user content, subscriptions, AI, and the chosen jurisdiction;
+- terms matched to accounts, user content, subscriptions, and other applicable product behavior when needed;
 - `/support/` or `/contact/` with a working support channel and expected response path;
 - optional account-deletion instructions, accessibility statement, FAQ, and status links when useful.
 
@@ -85,7 +85,7 @@ Keep product name, support email, legal entity, URLs, and App Store ID in shared
 
 ## 5. ASO Source Of Truth
 
-Invoke `aso`, then `app-store-optimization`. Store approved source by locale under `aso/metadata/<locale>/` and keep a machine-readable strategy file containing positioning, audience, priority keywords, evidence, screenshot narrative, locale decisions, and version/date.
+Use `aso` and `app-store-optimization` when available and relevant; otherwise use this protocol with current Apple requirements. Store approved source by locale under the existing release structure or `aso/metadata/<locale>/`. Keep positioning, keywords, evidence, screenshot narrative, locale decisions, and freshness in a strategy record; use a machine-readable file only when scripts consume it.
 
 Generate or review:
 
@@ -99,7 +99,7 @@ Research live competitors and current store results; separate observed facts fro
 
 ## 6. Deterministic Marketing Capture
 
-Invoke `ios-marketing-capture`. Implement an in-app DEBUG-only capture mode with:
+Use `ios-marketing-capture` when available. Keep an existing reliable capture flow, or implement a DEBUG-only capture mode with:
 
 - stable seeded fictional data and deterministic dates/statuses;
 - explicit launch arguments/environment for capture, locale, appearance, and scenario;
@@ -114,7 +114,7 @@ If an App Preview is useful, use a separate deterministic XCUITest-driven record
 
 ## 7. Marketing Screenshot Composition
 
-Invoke `app-store-screenshots` after raw captures exist. Use its shipped editor/template; do not rebuild the editor by hand.
+Use `app-store-screenshots` after raw captures exist when it fits the requested output. Prefer its shipped editor/template or the repository's existing composition tool. A focused export does not require creating an editor application.
 
 Create a narrative led by the primary outcome, one claim per slide, real in-app captures, legible thumbnail copy, deliberate layout rhythm, localized copy, and current required export sizes. Each individual image must make sense outside the full carousel.
 
@@ -122,7 +122,7 @@ QA every locale/device export for accurate UI, safe claims, clipping, contrast, 
 
 ## 8. App Store Connect Operator
 
-Generate `aso/scripts/asc.mjs` or an equivalent idempotent operator from the current App Store Connect API documentation. It must support small composable commands such as:
+Prefer an existing maintained App Store Connect integration. For a manual release, document the dashboard steps and validation. Generate `aso/scripts/asc.mjs` or an equivalent operator only when recurring authorized work needs custom automation. Verify current API documentation for commands actually being implemented, such as:
 
 ```text
 validate-local
@@ -138,7 +138,7 @@ review-status --version <version>
 Requirements:
 
 - default to read-only inspection, validation, or diff;
-- require explicit version/app identifiers and `--confirm` for mutations;
+- require explicit version/app identifiers and an explicit mutation flag such as `--confirm`; passing it executes an already-authorized action rather than creating another conversational approval gate;
 - read issuer ID, key ID, app ID, and `.p8` path from environment; keep the private key outside the repository;
 - use short-lived JWTs, redact secrets, apply bounded retries, and print actionable API errors;
 - validate local metadata, locales, URLs, asset inventory, and current limits before network writes;

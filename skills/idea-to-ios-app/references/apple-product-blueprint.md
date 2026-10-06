@@ -1,6 +1,6 @@
 # Apple Product Blueprint
 
-Use this reference after discovery and before architecture or app code. Transfer Maestro's delivery discipline: separate product lanes, explicit session ownership, deterministic fixtures, and release automation. Create the product from the user's brief.
+Use this reference for the approved implementation scope. Keep the project runnable, dependency ownership clear, and verification repeatable. Extend an existing app in place; create additional product and release components only when requested.
 
 ## Contents
 
@@ -28,7 +28,7 @@ Implement only the approved contract persisted in `PRODUCT.md`. Confirm it conta
 - locales, phone/iPad expectations, and accessibility constraints;
 - risks that must be prototyped before broad implementation.
 
-The result must describe a product a user can finish a job with, not a feature list. If the approved record is missing or conflicts with the requested build, return to the Product Approval Gate.
+The result must describe a product a user can finish a job with, not a feature list. If approval exists in the conversation or brief, persist it without asking again. Clarify a material conflict or missing product decision before implementing the affected behavior.
 
 ## 2. Account Decision
 
@@ -44,10 +44,12 @@ Decide authentication before drawing the welcome screen.
 
 - cross-platform identity or server-owned data;
 - collaboration, shared workspaces, durable server jobs, or private integrations;
-- subscriptions/entitlements that must be reconciled server-side;
+- entitlements that must be shared across the product's own accounts or platforms;
 - abuse prevention or regulated access that genuinely requires identity.
 
-When accounts exist, design the whole lifecycle:
+An App Store purchase alone does not justify a separate product account. Verify the current App Review login rules against the actual account model. When accounts exist, cover session restoration, credential protection, recovery, revocation, deletion, and review access for the chosen provider.
+
+When Sign in with Apple is selected or required, design its whole lifecycle:
 
 - official Sign in with Apple presentation and HIG-compliant copy;
 - nonce/state handling and server validation of the identity token when a backend participates;
@@ -58,7 +60,7 @@ When accounts exist, design the whole lifecycle:
 - in-app account deletion, fresh reauthentication when appropriate, backend deletion/token revocation, and local wipe;
 - review/demo access that does not expose real personal data.
 
-Use Sosumi immediately before implementation to fetch the current AuthenticationServices docs, HIG, configuration steps, account-deletion technote, and App Review rules.
+Fetch current AuthenticationServices docs, HIG, configuration steps, account-deletion technote, and App Review rules using callable Sosumi tools or direct Apple documentation before implementation.
 
 ## 3. Experience Map
 
@@ -80,7 +82,7 @@ Specify for each screen:
 - navigation entry/exit and restoration/deep-link needs;
 - analytics event only if measurement is authorized and privacy-compatible.
 
-Use `NavigationStack` with typed lightweight route values for phone flows. Use `TabView` only for stable peer destinations users switch between frequently. Consider `NavigationSplitView` when iPad information hierarchy benefits. Fetch current APIs with Sosumi before choosing syntax.
+Choose `NavigationStack` and lightweight route values when a phone flow needs a navigation stack. Use `TabView` for stable peer destinations users switch between frequently. Consider `NavigationSplitView` when the supported iPad layout benefits. Verify current APIs before choosing syntax.
 
 ## 4. App Composition
 
@@ -89,7 +91,7 @@ The app entry owns long-lived dependencies and injects them; feature views do no
 ```text
 App entry
   ├─ configuration and persistence container
-  ├─ session/account state
+  ├─ session/account state when needed
   ├─ entitlement/store state when needed
   └─ RootView
        ├─ deterministic debug/capture hosts (DEBUG only)
@@ -133,6 +135,7 @@ aso/
   scripts/
 Docs/
   competitive-landscape.md
+  market-demand.md
   decisions/
     visual-assets.md
   release/
@@ -140,16 +143,16 @@ Docs/
 
 Keep shared agent instructions in `AGENTS.md`. A minimal `CLAUDE.md` may import or point to them for Claude Code; Codex reads `AGENTS.md`. Do not duplicate evolving rules in two long files.
 
-Set up the full shape for Build and Ship even when the first implementation targets only one vertical slice. `backend/` is the exception: create it only when the approved boundary requires it. Connect root commands and CI to the real subprojects; avoid empty decorative packages.
+This is a full release example, not a mandatory scaffold. For a Build vertical slice, create only the app, applicable tests, and useful documentation/tooling. Add `website/`, `aso/`, and release automation when delivery scope needs them, and `backend/` only when the approved boundary requires it. Preserve existing folders and project generation choices. Connect commands and CI to real subprojects; avoid empty packages.
 
 ## 6. Native Architecture
 
 - SwiftUI for native UI; Observation for app/feature state when compatible.
 - SwiftData for local domain persistence when it fits; plan and test migrations.
 - CloudKit only when sync/sharing is a product requirement, not as a reflex.
-- Protocol boundaries for network, auth, storage, clocks, notifications, purchases, and expensive transformations.
-- Feature/domain code independent of concrete persistence and HTTP clients.
-- Actors or isolated services for shared mutable asynchronous state.
+- Small concrete types first; introduce protocols where a real integration or deterministic test needs substitution.
+- Keep business rules testable without building storage/network abstractions for every feature.
+- Follow Swift concurrency isolation for actual shared asynchronous state; avoid speculative service layers.
 - App Intents, widgets, notifications, background work, StoreKit, or AI only when the product contract proves their value.
 
 Choose the minimum deployment target from audience and capability requirements. Prefer the latest stable APIs available at that target, with explicit availability paths when necessary. Do not opt into beta-only frameworks by accident.
@@ -173,7 +176,7 @@ Document request/response contracts, authentication, data minimization, retentio
 - Persistence and account behavior match the product contract.
 - All reachable production states are intentional.
 - Native navigation, controls, Dynamic Type, VoiceOver, dark mode, Reduce Motion, and supported layouts are verified.
-- Deterministic fixtures serve previews, UI tests, review/demo mode, and marketing capture without changing production semantics.
+- Deterministic fixtures serve the previews, tests, and capture flows in scope without changing production semantics. Test/capture shortcuts stay compile-gated; reviewer access must work in the submitted configuration.
 - Approved generated media is stored in the repository, documented with provider/model/prompt provenance, optimized for its consuming surface, and verified in context.
 - Build, unit tests, UI tests, and a simulator walkthrough are repeatable from documented commands.
 - No speculative framework or backend remains in the project.
