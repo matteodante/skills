@@ -7,6 +7,7 @@ A small collection of portable agent skills for Codex and Claude Code.
 | Skill | Purpose |
 | --- | --- |
 | [idea-to-ios-app](skills/idea-to-ios-app/SKILL.md) | Research an iPhone app idea, build an approved native product, or prepare an App Store release. |
+| [deeper](skills/deeper/SKILL.md) | Rewrite a task or prompt into a deeper version: expert practice, raw sources, methods, and outside verification. |
 
 The iOS skill has three modes: **Define**, **Build**, and **Ship**. It keeps country-specific demand evidence separate from assumptions, reuses approved product decisions, and creates only the app, website, backend, and release components the requested scope needs.
 
@@ -25,6 +26,8 @@ To use the same source with both agents:
 ```bash
 npx skills add matteodante/skills -g -a codex claude-code -s idea-to-ios-app -y
 ```
+
+Install `deeper` the same way with `-s deeper`, then invoke it as `/deeper` in Claude Code or `$deeper` in Codex.
 
 From a local checkout, substitute `.` for `matteodante/skills`. Inspect the skill and scripts before installing. Invoke it by name in your agent, for example:
 
@@ -47,6 +50,8 @@ Run the installed checker's absolute path from the target app repository to incl
 
 ```text
 skills/
+  deeper/
+    SKILL.md
   idea-to-ios-app/
     SKILL.md
     agents/openai.yaml
