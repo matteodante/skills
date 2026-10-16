@@ -7,7 +7,7 @@ A small collection of portable agent skills for Codex and Claude Code.
 | Skill | Purpose |
 | --- | --- |
 | [idea-to-ios-app](skills/idea-to-ios-app/SKILL.md) | Research an iPhone app idea, build an approved native product, or prepare an App Store release. |
-| [deeper](skills/deeper/SKILL.md) | Rewrite a task or prompt into a deeper version: expert practice, raw sources, methods, and outside verification. |
+| [deeper](skills/deeper/SKILL.md) | Do a task at an expert's depth: name what an expert would add, the raw sources, the methods and the outside verification, then do it that way. |
 | [project-launch](skills/project-launch/SKILL.md) | Take a finished project public: release and license, a fact-checked article, blog, portfolio and CV, a demo video and short posts, each published only with approval. |
 
 The iOS skill has three modes: **Define**, **Build**, and **Ship**. It keeps country-specific demand evidence separate from assumptions, reuses approved product decisions, and creates only the app, website, backend, and release components the requested scope needs.

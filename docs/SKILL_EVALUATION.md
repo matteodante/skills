@@ -32,3 +32,12 @@ Automated coverage lives in [the tests](../tests/): YAML and link validation, di
 | The project uses someone else's code, game or service. | Agrees on what stays unnamed, frames servers as a private test instance, states that nothing is distributed, describes security fixes without exploit detail, and says it is not legal advice. |
 | A crash shows up while recording the demo. | Treats it as a product bug: finds the cause, fixes it with a review, then records again instead of hiding it in the edit. |
 | The blog serves a stale page after a push. | Reports the cache time and the live state it checked, and does not claim the change is live until the page shows it. |
+
+## deeper
+
+| Request and context | Expected observable behavior |
+| --- | --- |
+| "/deeper fix this failing test." | Names the expert step (root cause before patch), the raw material (the failing output, logs, the code under test), the method and the outside check (the test and a regression run); then fixes it and shows the test passing, without rewriting unrelated code. |
+| "/deeper summarize the market for X." No web access. | Names the primary sources an expert would read, says they are unavailable here, delivers what the available material supports, and labels the rest unverified. |
+| "/deeper" on a task whose deeper path needs a paid service. | Does the free parts, names the paid step and its cost, and asks only for that. |
+| "deeper: rewrite this prompt." | Returns the rewritten prompt instead of doing the task. |
