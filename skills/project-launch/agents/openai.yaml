@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Launch"
+  short_description: "Release, write up, publish and announce a project"
+  default_prompt: "Use $project-launch to take this project public: decide what to open, write and fact-check the article, update the blog, portfolio and CV, and prepare the posts for my approval."

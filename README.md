@@ -8,6 +8,7 @@ A small collection of portable agent skills for Codex and Claude Code.
 | --- | --- |
 | [idea-to-ios-app](skills/idea-to-ios-app/SKILL.md) | Research an iPhone app idea, build an approved native product, or prepare an App Store release. |
 | [deeper](skills/deeper/SKILL.md) | Rewrite a task or prompt into a deeper version: expert practice, raw sources, methods, and outside verification. |
+| [project-launch](skills/project-launch/SKILL.md) | Take a finished project public: release and license, a fact-checked article, blog, portfolio and CV, a demo video and short posts, each published only with approval. |
 
 The iOS skill has three modes: **Define**, **Build**, and **Ship**. It keeps country-specific demand evidence separate from assumptions, reuses approved product decisions, and creates only the app, website, backend, and release components the requested scope needs.
 
@@ -28,6 +29,8 @@ npx skills add matteodante/skills -g -a codex claude-code -s idea-to-ios-app -y
 ```
 
 Install `deeper` the same way with `-s deeper`, then invoke it as `/deeper` in Claude Code or `$deeper` in Codex.
+
+Install `project-launch` the same way with `-s project-launch`. Its stages are **Release**, **Write-up**, **Publish** and **Announce**; ask for the one you need, for example "Use project-launch to write up this project and update my blog and CV".
 
 From a local checkout, substitute `.` for `matteodante/skills`. Inspect the skill and scripts before installing. Invoke it by name in your agent, for example:
 
