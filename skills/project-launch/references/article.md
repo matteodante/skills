@@ -20,6 +20,12 @@ The title uses the words the audience searches and shares: the genre or product 
 - Drop a claim that has no public source, or publish the source (a demo page with the measurement).
 - After editing, have a second model compare the changed parts with the documents they come from, then verify its findings before you fix anything.
 
+## Audience and depth
+
+- Write for two readers at once: a recruiter who must be able to read the whole piece, and a programmer who should come away curious enough to write. Tell why the thing exists, what it does for the person using it, what was hard, what was learned and where it stands, in the first person. No sales tone, no feature list, no call to buy; close with an open invitation to talk.
+- For a closed-source product, keep out everything that would help someone clone it: model names, parameters, pipeline stages, internal limits, hosting, costs. Describe what the user sees and the decisions behind it. An open-source project links its repository for the depth; the article still tells the story, not the spec. The Shape above is the technical write-up of a research port; a product story uses the lighter shape: a concrete opening, why, what it does, the hard parts as experiences, what was learned, where it stands.
+- Headings state the point in sentence case ("The shadow is never where you want it"), never a label that means nothing on its own.
+
 ## Voice and readability
 
 - Write in the first person, plainly, with the writer's opinions and asides. Apply the humanizer rules before publishing: no em or en dashes, no "not X but Y" contrasts, no one-line closers that restate the paragraph, no forced triads, no bold labels on list items, sentence-case headings that say what the section holds, no filler words such as delve, crucial, robust, showcase, testament.
