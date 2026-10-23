@@ -33,15 +33,14 @@ The title uses the words the audience searches and shares: the genre or product 
 - Give every section something the eye can hold: a short real code block, a small table, a blockquote with a real line from the product or its tests, a diagram or a screenshot. Open with a concrete hook (a quote, a response payload, three lines of code), not with an introduction.
 - Keep the article's subtitle self-contained and consistent with the body: it is the page description and the link preview, so a number that differs from the body is the first thing a reader sees.
 
-## Images and provenance
+## Images
 
-- One provenance manifest per article (`images/<slug>.origin.json`): file, type, source, licence, processing and SHA-256, for covers and screenshots alike. Generated covers record tool and prompt; screenshots record URL, viewport, date and state.
-- Without an image generator, compose the cover from the product's own rights-cleared media (a before/after of a real output, for example) and say so in the manifest. Never show as a result anything that is not a real output.
+- Without an image generator, compose the cover from the product's own rights-cleared media (a before/after of a real output, for example). Never show as a result anything that is not a real output.
 - Check the product's own rights register before using footage, and record the new use there.
 
 ## History
 
-- One commit per article in the articles repository: the article, its images, its manifest and its README line. Fold later edits into that commit with fixup commits and an autosquash rebase, and push with `--force-with-lease`; this only applies to a repository the author alone works on.
+- One commit per article in the articles repository: the article, its images and its README line. Fold later edits into that commit with fixup commits and an autosquash rebase, and push with `--force-with-lease`; this only applies to a repository the author alone works on.
 
 ## Third-party rights
 
