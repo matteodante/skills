@@ -6,6 +6,9 @@
 - Check the live page with an HTTP client, not a cached browser tab: the `<title>`, `meta name="description"`, the `og:` tags, a sentence from the new text, and that removed phrases return no match. Check the blog index too, because it may refresh on another schedule.
 - When an article is renamed, keep the URL slug. Posts already shared point to it.
 
+- A real blog also needs: an RSS or Atom feed with `<link rel="alternate" type="application/rss+xml">` autodiscovery on the index and the articles, every article in the sitemap with its publication or revision date, `dateModified` in the article's structured data when it was revised, and `author`/`publisher` linked to the site's Person node instead of an isolated copy. Verify against Google Search Central's article and sitemap guidance and the RSS 2.0 specification, not from memory.
+- After publishing, verify from the live site with an HTTP client: the feed answers with its media type and lists the article, the sitemap lists its URL, `llms.txt` and the assistant context name it, analytics reports its path (not a catch-all such as `/not-found`), and every external link in the article returns 200.
+
 ## Link previews
 
 - LinkedIn caches previews. After any change to the title, description or image, open the Post Inspector for the URL. Its scrape refreshes the card for new and existing posts.
