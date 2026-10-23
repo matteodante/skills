@@ -40,6 +40,7 @@ Read [article](references/article.md) for the structure, the claim discipline an
 - Lead with the question, answer it, then show the evidence: starting point, approach comparison, architecture, hard problems with before and after numbers, testing, how it was built, what's next.
 - Take every number from a measurement or a document in the project. Prefer accurate qualifiers to absolutes ("essentially unchanged").
 - Have a second model fact-check the changed parts against the project's documents before publishing. Verify its findings the same way as in Release.
+- Humanize and measure before publishing: no AI tells, short paragraphs, one visual element per section, a subtitle consistent with the body (see the voice section of [article](references/article.md)).
 
 ## Publish
 

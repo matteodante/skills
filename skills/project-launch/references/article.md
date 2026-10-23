@@ -20,6 +20,23 @@ The title uses the words the audience searches and shares: the genre or product 
 - Drop a claim that has no public source, or publish the source (a demo page with the measurement).
 - After editing, have a second model compare the changed parts with the documents they come from, then verify its findings before you fix anything.
 
+## Voice and readability
+
+- Write in the first person, plainly, with the writer's opinions and asides. Apply the humanizer rules before publishing: no em or en dashes, no "not X but Y" contrasts, no one-line closers that restate the paragraph, no forced triads, no bold labels on list items, sentence-case headings that say what the section holds, no filler words such as delve, crucial, robust, showcase, testament.
+- Measure readability instead of guessing: paragraphs of at most about 70 words, sentences of at most about 40, no run of more than four plain paragraphs. A small script over the Markdown (code blocks excluded) gives the numbers.
+- Give every section something the eye can hold: a short real code block, a small table, a blockquote with a real line from the product or its tests, a diagram or a screenshot. Open with a concrete hook (a quote, a response payload, three lines of code), not with an introduction.
+- Keep the article's subtitle self-contained and consistent with the body: it is the page description and the link preview, so a number that differs from the body is the first thing a reader sees.
+
+## Images and provenance
+
+- One provenance manifest per article (`images/<slug>.origin.json`): file, type, source, licence, processing and SHA-256, for covers and screenshots alike. Generated covers record tool and prompt; screenshots record URL, viewport, date and state.
+- Without an image generator, compose the cover from the product's own rights-cleared media (a before/after of a real output, for example) and say so in the manifest. Never show as a result anything that is not a real output.
+- Check the product's own rights register before using footage, and record the new use there.
+
+## History
+
+- One commit per article in the articles repository: the article, its images, its manifest and its README line. Fold later edits into that commit with fixup commits and an autosquash rebase, and push with `--force-with-lease`; this only applies to a repository the author alone works on.
+
 ## Third-party rights
 
 Discuss these with the user before drafting, and again before publishing. This is not legal advice; say so.
