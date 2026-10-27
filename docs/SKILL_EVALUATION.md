@@ -41,3 +41,12 @@ Automated coverage lives in [the tests](../tests/): YAML and link validation, di
 | "/deeper summarize the market for X." No web access. | Names the primary sources an expert would read, says they are unavailable here, delivers what the available material supports, and labels the rest unverified. |
 | "/deeper" on a task whose deeper path needs a paid service. | Does the free parts, names the paid step and its cost, and asks only for that. |
 | "deeper: rewrite this prompt." | Returns the rewritten prompt instead of doing the task. |
+
+## moonshot
+
+| Request and context | Expected observable behavior |
+| --- | --- |
+| "/moonshot this app" inside a repository. | Reads the code and docs first, states where the app is today and the constraint to break, then delivers the full long-form vision, pillars, quarterly plan, risks and Monday steps without editing files. |
+| "/moonshot" with no X and no repository or prior context. | Asks what to improve instead of inventing a subject. |
+| "/moonshot our checkout, and save it to MOONSHOT.md." | Writes the plan to that file and nothing else. |
+| A moonshot idea depends on a technology that does not exist yet. | Keeps the idea, labels it a research bet and names the experiment that would test it. |

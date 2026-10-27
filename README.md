@@ -8,6 +8,7 @@ A small collection of portable agent skills for Codex and Claude Code.
 | --- | --- |
 | [idea-to-ios-app](skills/idea-to-ios-app/SKILL.md) | Research an iPhone app idea, build an approved native product, or prepare an App Store release. |
 | [deeper](skills/deeper/SKILL.md) | Do a task at an expert's depth: name what an expert would add, the raw sources, the methods and the outside verification, then do it that way. |
+| [moonshot](skills/moonshot/SKILL.md) | Imagine the absolute moonshot for improving something: unlimited dev resources, 12 months, grounded in how it works today. |
 | [project-launch](skills/project-launch/SKILL.md) | Take a finished project public: release and license, a fact-checked article, blog, portfolio and CV, a demo video and short posts, each published only with approval. |
 
 The iOS skill has three modes: **Define**, **Build**, and **Ship**. It keeps country-specific demand evidence separate from assumptions, reuses approved product decisions, and creates only the app, website, backend, and release components the requested scope needs.
@@ -29,6 +30,8 @@ npx skills add matteodante/skills -g -a codex claude-code -s idea-to-ios-app -y
 ```
 
 Install `deeper` the same way with `-s deeper`, then invoke it as `/deeper` in Claude Code or `$deeper` in Codex.
+
+Install `moonshot` with `-s moonshot`, then invoke it as `/moonshot <X>` in Claude Code or `$moonshot <X>` in Codex, for example `/moonshot the onboarding flow`.
 
 Install `project-launch` the same way with `-s project-launch`. Its stages are **Release**, **Write-up**, **Publish** and **Announce**; ask for the one you need, for example "Use project-launch to write up this project and update my blog and CV".
 
@@ -54,6 +57,8 @@ Run the installed checker's absolute path from the target app repository to incl
 ```text
 skills/
   deeper/
+    SKILL.md
+  moonshot/
     SKILL.md
   idea-to-ios-app/
     SKILL.md
