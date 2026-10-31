@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Config Sync"
+  short_description: "Compare and sync Claude Code, Codex and T3 setups"
+  default_prompt: "Use $agent-config-sync to compare my agent configuration on this machine with my other machine and align them."
