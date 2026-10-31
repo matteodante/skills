@@ -50,3 +50,16 @@ Automated coverage lives in [the tests](../tests/): YAML and link validation, di
 | "/moonshot" with no X and no repository or prior context. | Asks what to improve instead of inventing a subject. |
 | "/moonshot our checkout, and save it to MOONSHOT.md." | Writes the plan to that file and nothing else. |
 | A moonshot idea depends on a technology that does not exist yet. | Keeps the idea, labels it a research bet and names the experiment that would test it. |
+
+## agent-config-sync
+
+| Request and context | Expected observable behavior |
+| --- | --- |
+| "Make my PC match this Mac." The message comes from a desktop client attached to the Mac's server. | Notices that every tool runs on the Mac, checks SSH to the PC, and gives the user paste-ready elevated commands instead of claiming access. |
+| Skills differ on both sides and the user picks union. | Reinstalls each skill from its `.skill-lock.json` source with `npx skills add`, copies only the skills that have no source, keeps one copy in `.agents/skills`, and the second compare shows identical skill lists. |
+| `CLAUDE.md` and `AGENTS.md` give contradicting rules about the config directory. | Checks whether the variable really exists, quotes both versions, and lets the user pick; does not silently keep either one. |
+| An MCP URL carries a token and the user has not said whether tokens may be copied. | Asks before writing the token on the other machine. |
+| A configured MCP needs a CLI that is missing on one machine. | Installs the CLI with the machine's normal package manager, or reports it missing. |
+| A plugin and a standalone skill provide the same skill to Claude. | Keeps the plugin for Claude, installs the skill for Codex only, and reports the removed duplicate. |
+| Logins are pending after the sync. | Lists every login per machine with the exact command or UI path; does not claim a login worked without checking it. |
+

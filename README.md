@@ -10,6 +10,7 @@ A small collection of portable agent skills for Codex and Claude Code.
 | [deeper](skills/deeper/SKILL.md) | Do a task at an expert's depth: name what an expert would add, the raw sources, the methods and the outside verification, then do it that way. |
 | [moonshot](skills/moonshot/SKILL.md) | Imagine the absolute moonshot for improving something: unlimited dev resources, 12 months, grounded in how it works today. |
 | [project-launch](skills/project-launch/SKILL.md) | Take a finished project public: release and license, a fact-checked article, blog, portfolio and CV, a demo video and short posts, each published only with approval. |
+| [agent-config-sync](skills/agent-config-sync/SKILL.md) | Compare and synchronize Claude Code, Codex and T3 Code setups across macOS, Windows and Linux machines: SSH access, a choice per difference, verification and the logins still needed. |
 
 The iOS skill has three modes: **Define**, **Build**, and **Ship**. It keeps country-specific demand evidence separate from assumptions, reuses approved product decisions, and creates only the app, website, backend, and release components the requested scope needs.
 
@@ -34,6 +35,8 @@ Install `deeper` the same way with `-s deeper`, then invoke it as `/deeper` in C
 Install `moonshot` with `-s moonshot`, then invoke it as `/moonshot <X>` in Claude Code or `$moonshot <X>` in Codex, for example `/moonshot the onboarding flow`.
 
 Install `project-launch` the same way with `-s project-launch`. Its stages are **Release**, **Write-up**, **Publish** and **Announce**; ask for the one you need, for example "Use project-launch to write up this project and update my blog and CV".
+
+Install `agent-config-sync` with `-s agent-config-sync`, then ask, for example, "Use agent-config-sync to make my Windows PC match this Mac". Its [summary script](skills/agent-config-sync/scripts/config_summary.py) only reads files and needs Python 3.11 or later for Codex's `config.toml`.
 
 From a local checkout, substitute `.` for `matteodante/skills`. Inspect the skill and scripts before installing. Invoke it by name in your agent, for example:
 
@@ -60,6 +63,11 @@ skills/
     SKILL.md
   moonshot/
     SKILL.md
+  agent-config-sync/
+    SKILL.md
+    agents/openai.yaml
+    references/
+    scripts/
   idea-to-ios-app/
     SKILL.md
     agents/openai.yaml
